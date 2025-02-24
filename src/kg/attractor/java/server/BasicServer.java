@@ -119,7 +119,7 @@ public abstract class BasicServer {
         }
     }
 
-    private void respond404(HttpExchange exchange) {
+    protected void respond404(HttpExchange exchange) {
         try {
             byte[] data = "404 Not found".getBytes();
             sendByteData(exchange, ResponseCodes.NOT_FOUND, ContentType.TEXT_PLAIN, data);
