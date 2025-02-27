@@ -115,7 +115,6 @@ public class Lesson44Server extends BasicServer {
             renderTemplate(exchange, "book.ftlh", data);
         } catch (Exception e) {
             System.out.println("Ошибка: " + e.getMessage());
-            respond404(exchange);
         }
     }
 
@@ -129,7 +128,6 @@ public class Lesson44Server extends BasicServer {
             renderTemplate(exchange, "employee.ftlh", data);
         } catch (Exception e) {
             System.out.println("Ошибка: " + e.getMessage());
-            respond404(exchange);
         }
     }
 
