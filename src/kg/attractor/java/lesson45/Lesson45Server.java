@@ -1,10 +1,10 @@
 package kg.attractor.java.lesson45;
 
 import com.sun.net.httpserver.HttpExchange;
-import kg.attractor.java.lesson44.Employee;
-import kg.attractor.java.lesson44.Lesson44Server;
+import kg.attractor.java.lesson44.*;
 import kg.attractor.java.server.ContentType;
 import kg.attractor.java.server.ResponseCodes;
+import kg.attractor.java.utils.DataLoader;
 import kg.attractor.java.utils.Utils;
 
 import java.io.IOException;
@@ -14,11 +14,25 @@ import java.util.*;
 public class Lesson45Server extends Lesson44Server {
 
     private List<Employee> employees = new ArrayList<>();
+    private List<Book> books;
+    private List<BookLoan> bookLoans;
+    private List<Genre> genres;
+
     private Employee currentUser = null;
 
 
     public Lesson45Server(String host, int port) throws IOException {
         super(host, port);
+
+        try {
+            this.books = DataLoader.loadBooks("data/json/books.json");
+            this.employees = DataLoader.loadEmployees("data/json/employees.json");
+            this.bookLoans = DataLoader.loadBookLoans("data/json/bookLoans.json");
+            this.genres = DataLoader.loadGenres("data/json/genres.json");
+        } catch (Exception e) {
+            System.err.println("Ошибка при загрузке данных: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
 
         registerGet("/auth/login", this::loginGet);
         registerPost("/auth/login", this::loginPost);

@@ -95,7 +95,7 @@ public class Lesson44Server extends BasicServer {
         books.add(new Book("3", "The Great Gatsby", "F. Scott Fitzgerald", "Classic", false));
 
         Employee emp1 = new Employee("1", "John Doe", "john@example.com", "123123");
-        emp1.borrowBook(books.get(1));
+        emp1.borrowBook(books.get(1).getId());
         employees.add(emp1);
     }
 
@@ -124,6 +124,7 @@ public class Lesson44Server extends BasicServer {
 
             Map<String, Object> data = new HashMap<>();
             data.put("employee", employee);
+            data.put("books", books);
 
             renderTemplate(exchange, "employee.ftlh", data);
         } catch (Exception e) {
