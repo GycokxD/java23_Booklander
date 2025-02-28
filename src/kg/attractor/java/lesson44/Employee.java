@@ -7,12 +7,14 @@ public class Employee {
     private String id;
     private String name;
     private String email;
+    private String password;
     private List<Book> borrowedBooks = new ArrayList<>();
 
-    public Employee(String id, String name, String email) {
+    public Employee(String id, String name, String email, String password) {
         this.id = id;
         this.name = name;
         this.email = email;
+        this.password = password;
     }
 
     public String getId() {
@@ -25,6 +27,10 @@ public class Employee {
 
     public String getEmail() {
         return email;
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public List<Book> getBorrowedBooks() {

@@ -94,7 +94,7 @@ public class Lesson44Server extends BasicServer {
         books.add(new Book("2", "To Kill a Mockingbird", "Harper Lee", "Fiction", true));
         books.add(new Book("3", "The Great Gatsby", "F. Scott Fitzgerald", "Classic", false));
 
-        Employee emp1 = new Employee("1", "John Doe", "john@example.com");
+        Employee emp1 = new Employee("1", "John Doe", "john@example.com", "123123");
         emp1.borrowBook(books.get(1));
         employees.add(emp1);
     }
