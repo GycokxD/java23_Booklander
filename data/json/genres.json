@@ -1,0 +1,7 @@
+{
+  "genres": [
+    {"id": "1", "name": "Dystopian"},
+    {"id": "2", "name": "Fiction"},
+    {"id": "3", "name": "Classic"}
+  ]
+}

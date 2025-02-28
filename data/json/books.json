@@ -1,10 +1,18 @@
 {
   "books": [
-    {"id": "1", "title": "1984", "author": "George Orwell", "genre": "Dystopian", "isBorrowed": false},
-    {"id": "2", "title": "To Kill a Mockingbird", "author": "Harper Lee", "genre": "Fiction", "isBorrowed": true},
-    {"id": "3", "title": "The Great Gatsby", "author": "F. Scott Fitzgerald", "genre": "Classic", "isBorrowed": false}
-  ],
-  "employees": [
-    {"id": "1", "name": "John Doe", "email": "john@example.com", "borrowedBooks": ["2"]}
+    {
+      "id": "1",
+      "title": "1984",
+      "author": "George Orwell",
+      "genre": "Dystopian",
+      "isBorrowed": false
+    },
+    {
+      "id": "2",
+      "title": "To Kill a Mockingbird",
+      "author": "Harper Lee",
+      "genre": "Fiction",
+      "isBorrowed": true
+    }
   ]
 }
