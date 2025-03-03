@@ -37,6 +37,14 @@ public class Book {
         return genre;
     }
 
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
     public void setBorrowed(boolean borrowed) {
         this.borrowed = borrowed;
     }

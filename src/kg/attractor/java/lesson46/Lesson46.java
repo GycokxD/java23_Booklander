@@ -1,6 +1,7 @@
 package kg.attractor.java.lesson46;
 
 import com.sun.net.httpserver.HttpExchange;
+import kg.attractor.java.lesson44.Employee;
 import kg.attractor.java.lesson45.Lesson45Server;
 import kg.attractor.java.server.Cookie;
 
@@ -46,5 +47,16 @@ public class Lesson46 extends Lesson45Server {
         data.put("cookies", cookies);
 
         renderTemplate(exchange, "cookie/cookie.ftlh", data);
+    }
+
+    private Employee getAuthenticatedUser(HttpExchange exchange) {
+        String cookies = getCookies(exchange);
+        Map<String, String> cookieMap = Cookie.parse(cookies);
+        String sessionId = cookieMap.get("sessionId");
+
+        if (sessionId != null) {
+            return SessionManager.getEmployee(sessionId);
+        }
+        return null;
     }
 }

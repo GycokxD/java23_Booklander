@@ -2,7 +2,10 @@ package kg.attractor.java.lesson45;
 
 import com.sun.net.httpserver.HttpExchange;
 import kg.attractor.java.lesson44.*;
+import kg.attractor.java.lesson46.AuthUtils;
+import kg.attractor.java.lesson46.SessionManager;
 import kg.attractor.java.server.ContentType;
+import kg.attractor.java.server.Cookie;
 import kg.attractor.java.server.ResponseCodes;
 import kg.attractor.java.utils.DataLoader;
 import kg.attractor.java.utils.Utils;
@@ -95,7 +98,15 @@ public class Lesson45Server extends Lesson44Server {
                 .findFirst();
 
         if (userOpt.isPresent()) {
-            currentUser = userOpt.get();
+            Employee employee = userOpt.get();
+            String sessionId = AuthUtils.generateSessionId();
+            SessionManager.addSession(sessionId, employee);
+
+            Cookie sessionCookie = Cookie.make("sessionId", sessionId);
+            sessionCookie.setMaxAge(600);
+            sessionCookie.setHttpOnly(true);
+            setCookie(exchange, sessionCookie);
+
             redirect303(exchange, "/profile");
         } else {
             Map<String, Object> data = new HashMap<>();
