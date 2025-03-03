@@ -90,9 +90,9 @@ public class Lesson44Server extends BasicServer {
     }
 
     private void initTestData() {
-        books.add(new Book("1", "1984", "George Orwell", "Dystopian", false));
-        books.add(new Book("2", "To Kill a Mockingbird", "Harper Lee", "Fiction", true));
-        books.add(new Book("3", "The Great Gatsby", "F. Scott Fitzgerald", "Classic", false));
+        books.add(new Book("1", "1984", "George Orwell", "Dystopian", false, "data/images/1.jpg"));
+        books.add(new Book("2", "To Kill a Mockingbird", "Harper Lee", "Fiction", true, "data/images/1.jpg"));
+        books.add(new Book("3", "The Great Gatsby", "F. Scott Fitzgerald", "Classic", false, "data/images/1.jpg"));
 
         Employee emp1 = new Employee("1", "John Doe", "john@example.com", "123123");
         emp1.borrowBook(books.get(1).getId());

@@ -6,13 +6,15 @@ public class Book {
     private String author;
     private String genre;
     private boolean borrowed;
+    private String image;
 
-    public Book(String id, String title, String author, String genre, boolean borrowed) {
+    public Book(String id, String title, String author, String genre, boolean borrowed, String image) {
         this.id = id;
         this.title = title;
         this.author = author;
         this.genre = genre;
         this.borrowed = borrowed;
+        this.image = image;
     }
 
     public boolean getBorrowed() {

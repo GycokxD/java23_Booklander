@@ -10,6 +10,7 @@
         <h1>Список книг</h1>
         <table>
             <tr>
+                <th>Обложка</th>
                 <th>Название</th>
                 <th>Автор</th>
                 <th>Жанр</th>
@@ -18,6 +19,13 @@
             </tr>
             <#list books as book>
                 <tr>
+                    <td>
+                        <#if book.image??>
+                            <img src="${book.image}" alt="${book.title}" style="width: 100px; height: auto;">
+                        <#else>
+                            <img src="data/images/1.jpg" alt="Нет изображения" style="width: 100px; height: auto;">
+                        </#if>
+                    </td>
                     <td>${book.title}</td>
                     <td>${book.author}</td>
                     <td>${book.genre}</td>
