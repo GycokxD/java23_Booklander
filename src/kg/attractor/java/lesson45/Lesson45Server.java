@@ -68,21 +68,14 @@ public class Lesson45Server extends Lesson44Server {
         String email = parsed.get("email");
         String password = parsed.get("password");
 
-        boolean isRegistered = employees.stream().noneMatch(e -> e.getEmail().equals(email));
+        boolean isRegistered = employees.stream().anyMatch(e -> e.getEmail().equals(email));
 
-        String response;
         if (isRegistered) {
-            employees.add(new Employee(id, name, email, password));
-            response = "<div class='success-message'><h1>Удачная регистрация!</h1></div>";
+            sendResponse(exchange, "Пользователь с таким email уже существует.");
         } else {
-            response = "<div class='error-message'><h1>Регистрация не удалась. Пользователь с таким email уже существует.</h1>" +
-                    "<a href='/register'>Попробовать снова</a></div>";
-        }
-
-        try {
-            sendByteData(exchange, ResponseCodes.OK, ContentType.TEXT_HTML, response.getBytes());
-        } catch (IOException e) {
-            e.printStackTrace();
+            Employee newEmployee = new Employee(id, name, email, password);
+            employees.add(newEmployee);
+            redirect303(exchange, "/login");
         }
     }
 
@@ -116,12 +109,16 @@ public class Lesson45Server extends Lesson44Server {
     }
 
     private void profileGet(HttpExchange exchange) {
-        Map<String, Object> data = new HashMap<>();
-        if (currentUser != null) {
-            data.put("user", currentUser);
-        } else {
-            data.put("user", new Employee("0", "Некий пользователь", "Неизвестно", ""));
+        Employee user = getAuthenticatedUser (exchange);
+        if (user == null) {
+            redirect303(exchange, "/login");
+            return;
         }
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("user", user);
+        data.put("borrowedBooks", user.getBorrowedBooks());
+        data.put("books", books);
         renderTemplate(exchange, "/profile/profile.ftlh", data);
     }
 }

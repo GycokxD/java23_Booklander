@@ -2,6 +2,8 @@ package kg.attractor.java.server;
 
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
+import kg.attractor.java.lesson44.Employee;
+import kg.attractor.java.lesson46.SessionManager;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -180,5 +182,27 @@ public abstract class BasicServer {
         return exchange.getRequestHeaders()
                 .getOrDefault("Cookie", List.of(""))
                 .get(0);
+    }
+
+    protected void sendResponse(HttpExchange exchange, String message) {
+        try {
+            exchange.sendResponseHeaders(200, message.length());
+            OutputStream os = exchange.getResponseBody();
+            os.write(message.getBytes());
+            os.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    protected Employee getAuthenticatedUser(HttpExchange exchange) {
+        String cookies = getCookies(exchange);
+        Map<String, String> cookieMap = Cookie.parse(cookies);
+        String sessionId = cookieMap.get("sessionId");
+
+        if (sessionId != null) {
+            return SessionManager.getEmployee(sessionId);
+        }
+        return null;
     }
 }
