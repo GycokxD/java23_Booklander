@@ -12,17 +12,19 @@
             <p><strong>Имя:</strong> ${user.name!"Некий пользователь"}</p>
             <p><strong>Email:</strong> ${user.email!"Неизвестно"}</p>
             <h2>Книги на руках:</h2>
-            <ul>
-                <#if user.borrowedBooks??>
-                    <#list user.borrowedBooks as book>
-                        <li>${book.title} (${book.author})</li>
+            <#if borrowedBooks?exists>
+                <ul>
+                    <#list borrowedBooks as bookId>
+                        <#assign book = books?filter(b -> b.id == bookId)?first>
+                        <li>${book.title} - ${book.author}</li>
                     </#list>
-                <#else>
-                    <li>Нет книг на руках.</li>
-                </#if>
-            </ul>
+                </ul>
+            <#else>
+                <p>У вас нет взятых книг.</p>
+            </#if>
         </div>
         <a href="/books" class="button">Назад к списку книг</a>
+        <a href="/book-actions" class="button">Управление книгами</a>
     </div>
 </body>
 </html>
