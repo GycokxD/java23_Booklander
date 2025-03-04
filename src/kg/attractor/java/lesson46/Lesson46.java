@@ -31,8 +31,10 @@ public class Lesson46 extends Lesson45Server {
         registerGet("/return", this::returnBookPage);
         registerGet("/borrow/{bookId}", this::confirmBorrow);
         registerGet("/return/{bookId}", this::confirmReturn);
+        registerGet("/logout", this::logoutPage);
         registerPost("/borrow", this::borrowBook);
         registerPost("/return", this::returnBook);
+        registerPost("/logout", this::logout);
     }
 
     private void cookieHandler(HttpExchange exchange) {
@@ -189,5 +191,28 @@ public class Lesson46 extends Lesson45Server {
         } else {
             sendResponse(exchange, "Книга не найдена или уже возвращена.");
         }
+    }
+
+    private void logout(HttpExchange exchange) {
+        Employee user = getAuthenticatedUser (exchange);
+        if (user != null) {
+            String cookies = getCookies(exchange);
+            Map<String, String> cookieMap = Cookie.parse(cookies);
+            String sessionId = cookieMap.get("sessionId");
+
+            if (sessionId != null) {
+                SessionManager.removeSession(sessionId);
+            }
+
+            Cookie cookie = Cookie.make("sessionId", "");
+            cookie.setMaxAge(0);
+            setCookie(exchange, cookie);
+        }
+
+        redirect303(exchange, "/login");
+    }
+
+    private void logoutPage(HttpExchange exchange) {
+        renderTemplate(exchange, "logout/logout.ftlh", null);
     }
 }

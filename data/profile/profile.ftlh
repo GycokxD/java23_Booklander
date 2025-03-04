@@ -25,6 +25,7 @@
         </div>
         <a href="/books" class="button">Назад к списку книг</a>
         <a href="/book-actions" class="button">Управление книгами</a>
+        <a href="/logout" class="button">Выйти из профиля</a>
     </div>
 </body>
 </html>
