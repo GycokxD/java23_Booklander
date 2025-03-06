@@ -23,14 +23,14 @@
                         <#if book.image??>
                             <img src="${book.image}" alt="${book.title}" style="width: 100px; height: auto;">
                         <#else>
-                            <img src="data/images/1.jpg" alt="Нет изображения" style="width: 100px; height: auto;">
+                            <img src="data/images/default.jpg" alt="Нет изображения" style="width: 100px; height: auto;">
                         </#if>
                     </td>
                     <td>${book.title}</td>
                     <td>${book.author}</td>
                     <td>${book.genre}</td>
                     <td>${book.borrowed?string("Выдана", "Доступна")}</td>
-                    <td><a href="/bookinfo" class="button">Подробнее</a></td>
+                    <td><a href="/bookinfo?id=${book.id}" class="button">Подробнее</a></td>
                 </tr>
             </#list>
         </table>

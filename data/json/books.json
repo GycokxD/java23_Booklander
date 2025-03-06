@@ -5,16 +5,27 @@
       "title": "1984",
       "author": "George Orwell",
       "genre": "Dystopian",
-      "isBorrowed": false,
-      "image": "data/images/1.jpg"
+      "borrowed": false,
+      "image": "data/images/1.jpg",
+      "description": "Роман-антиутопия, описывающий тоталитарное общество под постоянным наблюдением."
     },
     {
       "id": "2",
       "title": "To Kill a Mockingbird",
       "author": "Harper Lee",
       "genre": "Fiction",
-      "isBorrowed": true,
-      "image": "data/images/1.jpg"
+      "borrowed": true,
+      "image": "data/images/1.jpg",
+      "description": "История о расовой несправедливости и моральной силе в маленьком городке."
+    },
+    {
+      "id": "3",
+      "title": "The Great Gatsby",
+      "author": "F. Scott Fitzgerald",
+      "genre": "Classic",
+      "borrowed": false,
+      "image": "data/images/1.jpg",
+      "description": "Какое-то описание книги, очень длинный текст"
     }
   ]
 }

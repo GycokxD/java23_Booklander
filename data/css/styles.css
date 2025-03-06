@@ -109,3 +109,22 @@ tr:hover {
     background-color: #f8d7da;
     color: #721c24;
 }
+
+.book-details {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.book-image img {
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.book-info {
+    flex: 1;
+}
+
+.book-info h2 {
+    margin-top: 0;
+}

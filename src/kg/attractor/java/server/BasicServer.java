@@ -200,10 +200,14 @@ public abstract class BasicServer {
 
     protected void sendResponse(HttpExchange exchange, String message) {
         try {
-            exchange.sendResponseHeaders(200, message.length());
-            OutputStream os = exchange.getResponseBody();
-            os.write(message.getBytes());
-            os.close();
+            byte[] responseBytes = message.getBytes(StandardCharsets.UTF_8);
+
+            exchange.getResponseHeaders().set("Content-Type", "text/plain; charset=UTF-8");
+            exchange.sendResponseHeaders(200, responseBytes.length);
+
+            try (OutputStream os = exchange.getResponseBody()) {
+                os.write(responseBytes);
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

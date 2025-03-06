@@ -28,4 +28,7 @@ bin/
 ### Mac OS ###
 .DS_Store
 /.idea/
-.iml
+/.iml
+/AttractorHttpServer.iml
+/java23_Booklander.iml
+/lesson44.iml

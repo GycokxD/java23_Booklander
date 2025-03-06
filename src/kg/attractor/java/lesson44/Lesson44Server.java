@@ -8,13 +8,11 @@ import freemarker.template.TemplateExceptionHandler;
 import kg.attractor.java.server.BasicServer;
 import kg.attractor.java.server.ContentType;
 import kg.attractor.java.server.ResponseCodes;
+import kg.attractor.java.utils.Utils;
 
 import java.io.*;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class Lesson44Server extends BasicServer {
     private final static Configuration freemarker = initFreeMarker();
@@ -90,9 +88,9 @@ public class Lesson44Server extends BasicServer {
     }
 
     private void initTestData() {
-        books.add(new Book("1", "1984", "George Orwell", "Dystopian", false, "data/images/1.jpg"));
-        books.add(new Book("2", "To Kill a Mockingbird", "Harper Lee", "Fiction", true, "data/images/1.jpg"));
-        books.add(new Book("3", "The Great Gatsby", "F. Scott Fitzgerald", "Classic", false, "data/images/1.jpg"));
+        books.add(new Book("1", "1984", "George Orwell", "Dystopian", false, "data/images/1.jpg", "Роман-антиутопия, описывающий тоталитарное общество под постоянным наблюдением."));
+        books.add(new Book("2", "To Kill a Mockingbird", "Harper Lee", "Fiction", true, "data/images/1.jpg", "История о расовой несправедливости и моральной силе в маленьком городке."));
+        books.add(new Book("3", "The Great Gatsby", "F. Scott Fitzgerald", "Classic", false, "data/images/1.jpg", "Какое-то описание книги, очень длинный текст"));
 
         Employee emp1 = new Employee("1", "John Doe", "john@example.com", "123123");
         emp1.borrowBook(books.get(1).getId());
@@ -107,14 +105,25 @@ public class Lesson44Server extends BasicServer {
 
     private void bookInfoHandler(HttpExchange exchange) {
         try {
-            Book book = books.get(0);
+            String query = exchange.getRequestURI().getQuery();
+            Map<String, String> params = Utils.parseUrlEncoded(query, "&");
+            String bookId = params.get("id");
 
-            Map<String, Object> data = new HashMap<>();
-            data.put("book", book);
+            Optional<Book> bookOpt = books.stream()
+                    .filter(b -> b.getId().equals(bookId))
+                    .findFirst();
 
-            renderTemplate(exchange, "book.ftlh", data);
+            if (bookOpt.isPresent()) {
+                Book book = bookOpt.get();
+                Map<String, Object> data = new HashMap<>();
+                data.put("book", book);
+                renderTemplate(exchange, "bookinfo.ftlh", data);
+            } else {
+                sendResponse(exchange, "Книга не найдена.");
+            }
         } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
+            e.printStackTrace();
+            sendResponse(exchange, "Ошибка при обработке запроса.");
         }
     }
 
