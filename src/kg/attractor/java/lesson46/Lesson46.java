@@ -5,6 +5,7 @@ import kg.attractor.java.lesson44.Book;
 import kg.attractor.java.lesson44.Employee;
 import kg.attractor.java.lesson45.Lesson45Server;
 import kg.attractor.java.server.Cookie;
+import kg.attractor.java.utils.DataException;
 import kg.attractor.java.utils.DataLoader;
 import kg.attractor.java.utils.DataSaver;
 import kg.attractor.java.utils.Utils;
@@ -172,17 +173,21 @@ public class Lesson46 extends Lesson45Server {
             Book book = bookOpt.get();
             book.setBorrowed(true);
             user.borrowBook(bookId);
+
+            try {
+                employees = DataLoader.loadEmployees("data/json/employees.json");
+                DataSaver.saveBooks("data/json/books.json", books);
+                DataSaver.saveEmployees("data/json/employees.json", employees);
+            } catch (DataException | IOException e) {
+                e.printStackTrace();
+                sendResponse(exchange, "Ошибка при сохранении данных.");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
             redirect303(exchange, "/book-actions");
         } else {
             sendResponse(exchange, "Книга недоступна для выдачи.");
-        }
-
-        try {
-            DataSaver.saveBooks("data/json/books.json", books);
-            DataSaver.saveEmployees("data/json/employees.json", employees);
-        } catch (IOException e) {
-            e.printStackTrace();
-            sendResponse(exchange, "Ошибка при сохранении данных.");
         }
     }
 
@@ -202,17 +207,21 @@ public class Lesson46 extends Lesson45Server {
             Book book = bookOpt.get();
             book.setBorrowed(false);
             user.getBorrowedBooks().remove(bookId);
+
+            try {
+                employees = DataLoader.loadEmployees("data/json/employees.json");
+                DataSaver.saveBooks("data/json/books.json", books);
+                DataSaver.saveEmployees("data/json/employees.json", employees);
+            } catch (DataException | IOException e) {
+                e.printStackTrace();
+                sendResponse(exchange, "Ошибка при сохранении данных.");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+
             redirect303(exchange, "/book-actions");
         } else {
             sendResponse(exchange, "Книга не найдена или уже возвращена.");
-        }
-
-        try {
-            DataSaver.saveBooks("data/json/books.json", books);
-            DataSaver.saveEmployees("data/json/employees.json", employees);
-        } catch (IOException e) {
-            e.printStackTrace();
-            sendResponse(exchange, "Ошибка при сохранении данных.");
         }
     }
 

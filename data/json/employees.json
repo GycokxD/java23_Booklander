@@ -5,8 +5,13 @@
       "name": "John",
       "email": "john@example.com",
       "password": "password123",
-      "borrowedBooks": ["2"],
-      "borrowedBooksHistory": ["1", "2"]
+      "borrowedBooks": [
+        "2"
+      ],
+      "borrowedBooksHistory": [
+        "1",
+        "2"
+      ]
     },
     {
       "id": "2",
@@ -14,7 +19,9 @@
       "email": "jane@example.com",
       "password": "securepassword",
       "borrowedBooks": [],
-      "borrowedBooksHistory": ["3"]
+      "borrowedBooksHistory": [
+        "3"
+      ]
     }
   ]
 }

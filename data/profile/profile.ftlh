@@ -49,6 +49,8 @@
             <p>Пожалуйста, <a href="/login">войдите в систему</a>, чтобы просмотреть профиль.</p>
         </#if>
         <a href="/books" class="button">Назад к списку книг</a>
+        <a href="/book-actions" class="button">Управление книгами</a>
+        <a href="/logout" class="button">Выйти из системы</a>
     </div>
 </body>
 </html>

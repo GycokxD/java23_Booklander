@@ -8,6 +8,7 @@ import freemarker.template.TemplateExceptionHandler;
 import kg.attractor.java.server.BasicServer;
 import kg.attractor.java.server.ContentType;
 import kg.attractor.java.server.ResponseCodes;
+import kg.attractor.java.utils.DataLoader;
 import kg.attractor.java.utils.Utils;
 
 import java.io.*;
@@ -127,7 +128,12 @@ public class Lesson44Server extends BasicServer {
         }
     }
 
-    private void employeesHandler(HttpExchange exchange) {
+    private void employeesHandler(HttpExchange exchange){
+        try {
+        employees = DataLoader.loadEmployees("data/json/employees.json");
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
         Map<String, Object> data = new HashMap<>();
         data.put("employees", employees);
         data.put("books", books);
