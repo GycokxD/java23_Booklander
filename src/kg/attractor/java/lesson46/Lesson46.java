@@ -164,6 +164,11 @@ public class Lesson46 extends Lesson45Server {
                 .findFirst();
 
         if (bookOpt.isPresent()) {
+            if (user.getBorrowedBooks().size() >= 2) {
+                sendResponse(exchange, "Ошибка: Вы не можете взять больше 2 книг одновременно.");
+                return;
+            }
+
             Book book = bookOpt.get();
             book.setBorrowed(true);
             user.borrowBook(bookId);

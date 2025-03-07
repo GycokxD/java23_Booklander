@@ -25,7 +25,7 @@ public class Lesson44Server extends BasicServer {
         registerGet("/sample", this::freemarkerSampleHandler);
         registerGet("/books", this::booksHandler);
         registerGet("/bookinfo", this::bookInfoHandler);
-        registerGet("/employee", this::employeeHandler);
+        registerGet("/employee", this::employeesHandler);
 
         initTestData();
     }
@@ -127,18 +127,11 @@ public class Lesson44Server extends BasicServer {
         }
     }
 
-    private void employeeHandler(HttpExchange exchange) {
-        try {
-            Employee employee = employees.get(0);
-
-            Map<String, Object> data = new HashMap<>();
-            data.put("employee", employee);
-            data.put("books", books);
-
-            renderTemplate(exchange, "employee.ftlh", data);
-        } catch (Exception e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
+    private void employeesHandler(HttpExchange exchange) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("employees", employees);
+        data.put("books", books);
+        renderTemplate(exchange, "employee.ftlh", data);
     }
 
     private Map<String, Object> getSampleDataModel() {
