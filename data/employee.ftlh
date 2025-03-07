@@ -55,6 +55,7 @@
             </#list>
         </table>
         <a href="/books" class="button">Назад к списку книг</a>
+        <a href="/profile" class="button">В профиль</a>
     </div>
 </body>
 </html>

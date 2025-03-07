@@ -34,6 +34,7 @@
                 </tr>
             </#list>
         </table>
+        <a href="/profile" class="button">В профиль</a>
     </div>
 </body>
 </html>
