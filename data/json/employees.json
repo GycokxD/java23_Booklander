@@ -1,7 +1,7 @@
 {
   "employees": [
     {
-      "id": "1",
+      "id": "550e8400-e29b-41d4-a716-446655440000",
       "name": "John",
       "email": "john@example.com",
       "password": "password123",
@@ -14,7 +14,7 @@
       ]
     },
     {
-      "id": "2",
+      "id": "550e8400-e29b-41d4-a716-446655440001",
       "name": "Jane",
       "email": "jane@example.com",
       "password": "securepassword",
@@ -22,6 +22,14 @@
       "borrowedBooksHistory": [
         "3"
       ]
+    },
+    {
+      "id": "ca2b804c-9b2c-4c31-bdbc-b4816f8de0ae",
+      "name": "Denis",
+      "email": "qwe@qwe",
+      "password": "123321",
+      "borrowedBooks": [],
+      "borrowedBooksHistory": []
     }
   ]
 }

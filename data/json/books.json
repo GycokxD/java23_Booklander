@@ -5,7 +5,7 @@
       "title": "1984",
       "author": "George Orwell",
       "genre": "Dystopian",
-      "borrowed": true,
+      "borrowed": false,
       "image": "data/images/1.jpg",
       "description": "Роман-антиутопия, описывающий тоталитарное общество под постоянным наблюдением."
     },

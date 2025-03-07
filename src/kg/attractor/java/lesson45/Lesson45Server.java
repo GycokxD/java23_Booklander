@@ -7,6 +7,7 @@ import kg.attractor.java.lesson46.SessionManager;
 import kg.attractor.java.server.ContentType;
 import kg.attractor.java.server.Cookie;
 import kg.attractor.java.server.ResponseCodes;
+import kg.attractor.java.utils.DataException;
 import kg.attractor.java.utils.DataLoader;
 import kg.attractor.java.utils.DataSaver;
 import kg.attractor.java.utils.Utils;
@@ -64,23 +65,12 @@ public class Lesson45Server extends Lesson44Server {
         String raw = getBody(exchange);
         Map<String, String> parsed = Utils.parseUrlEncoded(raw, "&");
 
-        String id = parsed.get("id");
         String name = parsed.get("name");
         String email = parsed.get("email");
         String password = parsed.get("password");
 
-        if (isBlank(id) || isBlank(name) || isBlank(email) || isBlank(password)) {
+        if (isBlank(name) || isBlank(email) || isBlank(password)) {
             sendResponse(exchange, "Ошибка: Все поля должны быть заполнены.");
-            return;
-        }
-
-        if (containsWhitespace(id)) {
-            sendResponse(exchange, "Ошибка: ID не должен содержать пробелов.");
-            return;
-        }
-
-        if (containsWhitespace(name)) {
-            sendResponse(exchange, "Ошибка: Имя не должно содержать пробелов.");
             return;
         }
 
@@ -89,8 +79,22 @@ public class Lesson45Server extends Lesson44Server {
         if (isRegistered) {
             sendResponse(exchange, "Ошибка: Пользователь с таким email уже существует.");
         } else {
+            String id = generateEmployeeId();
+
             Employee newEmployee = new Employee(id, name, email, password);
             employees.add(newEmployee);
+
+            try {
+                DataLoader.loadEmployees("data/json/employees.json");
+                DataSaver.saveEmployees("data/json/employees.json", employees);
+            } catch (DataException | IOException e) {
+                e.printStackTrace();
+                sendResponse(exchange, "Ошибка при сохранении данных.");
+                return;
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
             redirect303(exchange, "/login");
         }
     }
@@ -144,5 +148,9 @@ public class Lesson45Server extends Lesson44Server {
         data.put("borrowedBooks", user.getBorrowedBooks());
         data.put("books", books);
         renderTemplate(exchange, "/profile/profile.ftlh", data);
+    }
+
+    private String generateEmployeeId() {
+        return UUID.randomUUID().toString();
     }
 }

@@ -9,10 +9,6 @@
     <form action="/register" method="post">
         <h1>Регистрация сотрудника</h1>
         <div class="form-element">
-            <label for="id">ID:</label>
-            <input type="text" id="id" name="id" required>
-        </div>
-        <div class="form-element">
             <label for="name">Имя:</label>
             <input type="text" id="name" name="name" required>
         </div>
