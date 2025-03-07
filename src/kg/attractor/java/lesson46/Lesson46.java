@@ -6,6 +6,7 @@ import kg.attractor.java.lesson44.Employee;
 import kg.attractor.java.lesson45.Lesson45Server;
 import kg.attractor.java.server.Cookie;
 import kg.attractor.java.utils.DataLoader;
+import kg.attractor.java.utils.DataSaver;
 import kg.attractor.java.utils.Utils;
 
 import java.io.IOException;
@@ -14,6 +15,7 @@ import java.util.*;
 
 public class Lesson46 extends Lesson45Server {
     private List<Book> books;
+    private List<Employee> employees;
 
     public Lesson46(String host, int port) throws IOException {
         super(host, port);
@@ -169,6 +171,14 @@ public class Lesson46 extends Lesson45Server {
         } else {
             sendResponse(exchange, "Книга недоступна для выдачи.");
         }
+
+        try {
+            DataSaver.saveBooks("data/json/books.json", books);
+            DataSaver.saveEmployees("data/json/employees.json", employees);
+        } catch (IOException e) {
+            e.printStackTrace();
+            sendResponse(exchange, "Ошибка при сохранении данных.");
+        }
     }
 
     private void returnBook(HttpExchange exchange) {
@@ -190,6 +200,14 @@ public class Lesson46 extends Lesson45Server {
             redirect303(exchange, "/book-actions");
         } else {
             sendResponse(exchange, "Книга не найдена или уже возвращена.");
+        }
+
+        try {
+            DataSaver.saveBooks("data/json/books.json", books);
+            DataSaver.saveEmployees("data/json/employees.json", employees);
+        } catch (IOException e) {
+            e.printStackTrace();
+            sendResponse(exchange, "Ошибка при сохранении данных.");
         }
     }
 

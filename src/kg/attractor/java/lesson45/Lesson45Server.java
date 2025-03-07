@@ -8,6 +8,7 @@ import kg.attractor.java.server.ContentType;
 import kg.attractor.java.server.Cookie;
 import kg.attractor.java.server.ResponseCodes;
 import kg.attractor.java.utils.DataLoader;
+import kg.attractor.java.utils.DataSaver;
 import kg.attractor.java.utils.Utils;
 
 import java.io.IOException;
@@ -68,15 +69,38 @@ public class Lesson45Server extends Lesson44Server {
         String email = parsed.get("email");
         String password = parsed.get("password");
 
+        if (isBlank(id) || isBlank(name) || isBlank(email) || isBlank(password)) {
+            sendResponse(exchange, "Ошибка: Все поля должны быть заполнены.");
+            return;
+        }
+
+        if (containsWhitespace(id)) {
+            sendResponse(exchange, "Ошибка: ID не должен содержать пробелов.");
+            return;
+        }
+
+        if (containsWhitespace(name)) {
+            sendResponse(exchange, "Ошибка: Имя не должно содержать пробелов.");
+            return;
+        }
+
         boolean isRegistered = employees.stream().anyMatch(e -> e.getEmail().equals(email));
 
         if (isRegistered) {
-            sendResponse(exchange, "Пользователь с таким email уже существует.");
+            sendResponse(exchange, "Ошибка: Пользователь с таким email уже существует.");
         } else {
             Employee newEmployee = new Employee(id, name, email, password);
             employees.add(newEmployee);
             redirect303(exchange, "/login");
         }
+    }
+
+    private boolean isBlank(String value) {
+        return value == null || value.trim().isEmpty();
+    }
+
+    private boolean containsWhitespace(String value) {
+        return value != null && value.contains(" ");
     }
 
     private void loginPost(HttpExchange exchange) {
